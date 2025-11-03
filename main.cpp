@@ -30,15 +30,9 @@ int main() {
 
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
-    cout<<nextFree<<endl;
-    for (int i = 0; i<26; i++) {
-        if (freq[i]!=0) {
-            cout<<freq[i]<<" "<<endl;
-        }
-    }
 
     // Step 3: Build encoding tree using your heap
-    //int root = buildEncodingTree(nextFree);
+    int root = buildEncodingTree(nextFree);
 
     // Step 4: Generate binary codes using an STL stack
     //string codes[26];
@@ -103,20 +97,28 @@ int buildEncodingTree(int nextFree) {
     //    - Set left/right pointers
     //    - Push new parent index back into the heap
     // 4. Return the index of the last remaining node (root)
-
     MinHeap heap;
     for (int i = 0; i < nextFree; i++) {
         heap.push(i, weightArr);
     }
-    while (heap.size > 1) {
-        for (int i = 0; i<=1; i++) {
-            int p = p + heap.pop(weightArr);
-            int *l = leftArr;
-            int *r = rightArr;
-            heap.push(nextFree, weightArr);
-        }
+    if (heap.size == 0) {
+        return -1;
     }
-    return 0;
+    if (heap.size == 1) {
+        return heap.pop(weightArr);
+    }
+    while (heap.size > 1) {
+        int left = heap.pop(weightArr);
+        int right = heap.pop(weightArr);
+        int p = nextFree++;
+
+        leftArr[p] = left;
+        rightArr[p] = right;
+        weightArr[p] = weightArr[left] + weightArr[right];
+
+        heap.push(p, weightArr);
+     }
+    return heap.pop(weightArr);
 }
 
 // Step 4: Use an STL stack to generate codes
