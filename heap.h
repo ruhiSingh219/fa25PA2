@@ -8,7 +8,7 @@
 #include <iostream>
 #include <stdexcept>
 using namespace std;
-
+//ADD OVERALL COMMENTS**************
 struct MinHeap {
     int data[64];
     int size;
@@ -16,7 +16,6 @@ struct MinHeap {
     MinHeap() { size = 0; }
 
     void push(int idx, int weightArr[]) {
-        // TODO: insert index at end of heap, restore order using upheap()
         //throw error if push onto full
         if (size >= 64) {
             throw runtime_error("Overflow");
@@ -28,7 +27,6 @@ struct MinHeap {
     }
 
     int pop(int weightArr[]) {
-        // TODO: remove and return smallest index
         // throw error if pop from empty.
         if (size == 0) {
             throw runtime_error("Underflow");
@@ -60,8 +58,6 @@ struct MinHeap {
         }
     }
     void downheap(int pos, int weightArr[]) {
-        // TODO: swap parent downward while larger than any child
-
          while (true) {
              int lc = data[(2*pos) + 1];
              int rc = data[(2*pos) + 2];
